@@ -1,11 +1,12 @@
 <p>Tokens</p>
 <mat-form-field appearance="fill">
     <mat-label>Choose token:</mat-label>
-    <mat-select>
+    <mat-select ngModel (ngModelChange)="changeName($event)">
         <mat-option *ngFor="let name of names" [value]="name">
             {{name}}
           </mat-option>
     </mat-select>
+    <mat-hint [hidden]="price === ''">{{price}}$</mat-hint>
 </mat-form-field>
 <!-- <ul>
     <li *ngFor="let token of tokens">

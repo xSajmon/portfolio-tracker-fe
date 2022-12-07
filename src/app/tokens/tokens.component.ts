@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from '../token.service';
 import { Token } from '../Token';
+import { timeInterval } from 'rxjs';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Token } from '../Token';
 export class TokensComponent implements OnInit {
   tokens: Token[] = [];
   names: string[] = [];
+  price: string = ''
 
   constructor(private tokenService: TokenService){}
   
@@ -30,6 +32,14 @@ export class TokensComponent implements OnInit {
       .subscribe(result => this.names = result);
   }
 
+  public getTokenPrice(name: string): void{
+    this.tokenService.getTokenPrice(name)
+    .subscribe(result => this.price = result.price.toString());
+  }
+
+  public changeName(event: any){
+      this.getTokenPrice(event);
+  }
  
 
 }

@@ -15,5 +15,9 @@ export class TokenService {
     return this.http.get<Token[]>(this.url);
   }
 
+  getTokenNames(): Observable<string[]>{
+    return this.http.get<string[]>(this.url+'/all/names');
+  }
+
   constructor(private http: HttpClient) { }
 }

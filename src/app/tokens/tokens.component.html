@@ -1,6 +1,14 @@
 <p>Tokens</p>
-<ul>
+<mat-form-field appearance="fill">
+    <mat-label>Choose token:</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let name of names" [value]="name">
+            {{name}}
+          </mat-option>
+    </mat-select>
+</mat-form-field>
+<!-- <ul>
     <li *ngFor="let token of tokens">
         <span>{{token.symbol}}: {{token.price}}</span>
     </li>
-</ul>
+</ul> -->

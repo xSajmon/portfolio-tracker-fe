@@ -11,15 +11,23 @@ import { Token } from '../Token';
 })
 export class TokensComponent implements OnInit {
   tokens: Token[] = [];
+  names: string[] = [];
+
   constructor(private tokenService: TokenService){}
   
   ngOnInit(): void {
     this.getTokens();
+    this.getTokenNames();
   }
 
   public getTokens(): void{
     this.tokenService.getTokens()
       .subscribe(result => this.tokens = result);
+  }
+
+  public getTokenNames(): void{
+    this.tokenService.getTokenNames()
+      .subscribe(result => this.names = result);
   }
 
  

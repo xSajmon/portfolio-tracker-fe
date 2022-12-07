@@ -7,12 +7,13 @@
 
 </head>
 <body>
-  <h3>{{title}}</h3>  
+  
   <div [hidden]="!authenticated()" class="container">
+    <h3>{{title}}</h3>  
     <ul class="nav nav-pills">
       <li><a routerLinkActive="active" routerLink="/user">User Info</a></li>
       <li><a routerLinkActive="active" routerLink="/tokens">Tokens</a></li>
-      <!-- <li><a (click)="logout()">Logout</a></li> -->
+      <li><a (click)="logout()" routerLinkActive="active" routerLink="/login">Logout</a></li>
     </ul>
   </div>
   <div class="container">

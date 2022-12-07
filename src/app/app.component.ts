@@ -20,4 +20,8 @@ export class AppComponent {
     return this.app.authenticated
   }
 
+  logout(){
+    this.app.logout();
+  }
+
 }

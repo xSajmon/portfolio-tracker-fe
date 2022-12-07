@@ -36,4 +36,9 @@ export class AppService {
   getAuthenticationToken(){
     return sessionStorage.getItem('token');
   }
+
+  logout(){
+    sessionStorage.removeItem('token')
+    this.authenticated = false
+  }
 }

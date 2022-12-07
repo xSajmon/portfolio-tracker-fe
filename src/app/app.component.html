@@ -8,10 +8,8 @@
 </head>
 <body>
   <h3>{{title}}</h3>  
-  <div class="container">
+  <div [hidden]="!authenticated()" class="container">
     <ul class="nav nav-pills">
-      <li><a routerLinkActive="active" routerLink="/">Home</a></li>
-      <li><a routerLinkActive="active" routerLink="/login">Login</a></li>
       <li><a routerLinkActive="active" routerLink="/user">User Info</a></li>
       <li><a routerLinkActive="active" routerLink="/tokens">Tokens</a></li>
       <!-- <li><a (click)="logout()">Logout</a></li> -->

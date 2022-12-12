@@ -36,10 +36,21 @@ export class AddTransactionDialog implements OnInit{
     }
 
   tokenNames: string[] = []
-  price?: number
+  price?: number;
+  walletBalance?: number;
+  step?: number
 
   ngOnInit(): void {
     this.getTokenNames();
+    this.getWalletBalance();
+   
+  }
+
+  public getWalletBalance(): void{
+    this.transactionService.getUserBalance().subscribe(data => {
+      this.walletBalance = data;
+      this.step = data/4;
+    })
   }
 
   public getTokenNames(): void{

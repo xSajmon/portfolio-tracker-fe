@@ -1,9 +1,5 @@
-<div>
-    <label for="name"> User name: </label>
-    <input id="name" [(ngModel)]= "user.name" placeholder = "name">
-</div>
-
-
-<h5>Details: {{user.name}}</h5>
+<h2>Details</h2>
 <p>ID: {{user.id}}</p>
-<p>Name: {{user.name | uppercase}}</p>
+<p>Name: {{user.username | uppercase}}</p>
+<p>Role: {{user.role | uppercase}}</p>
+<p>Wallet: {{user.walletId}}</p>

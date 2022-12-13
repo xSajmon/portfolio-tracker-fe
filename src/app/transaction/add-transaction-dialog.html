@@ -1,5 +1,5 @@
-<h2 mat-dialog-title>Add transaction</h2>
-<mat-dialog-content class="d-flex flex-column">
+<h2 mat-dialog-title class="text-center">Add transaction</h2>
+<mat-dialog-content class="d-flex flex-column justify-content-center">
     <mat-form-field appearance="fill">
         <mat-label>Choose token:</mat-label>
         <mat-select ngModel (ngModelChange)="changeName($event)">
@@ -9,10 +9,11 @@
         </mat-select>
         <mat-hint [hidden]="!price">{{price}}$</mat-hint>
     </mat-form-field>
-    <mat-slider min = "0" [max] = "walletBalance" [step]="step" showTickMarks discrete="true">
-        <input matSliderThumb>
+    <mat-slider min = "0" [max] = "walletBalance" [step]="step" 
+    showTickMarks discrete="true" [displayWith]="formatLabel.bind(this)">
+        <input matSliderThumb [(ngModel)]="amount">
     </mat-slider>
-    
+    <h2 class="text-center">{{amount}}$</h2>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>

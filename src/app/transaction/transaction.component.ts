@@ -1,3 +1,4 @@
+import { ParseError } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import { TokenService } from './token/token.service';
@@ -19,8 +20,7 @@ export class TransactionComponent implements OnInit {
     this.dialog.open(AddTransactionDialog);
   }
 
-  
-  
+
 }
 
 @Component({
@@ -38,13 +38,18 @@ export class AddTransactionDialog implements OnInit{
   tokenNames: string[] = []
   price?: number;
   walletBalance?: number;
-  step?: number
+  step?: number;
+  amount: number = 0;
 
   ngOnInit(): void {
     this.getTokenNames();
     this.getWalletBalance();
    
   }
+
+  public formatLabel(value: number): string{
+    return value/this.walletBalance!*100 + '%';
+}
 
   public getWalletBalance(): void{
     this.transactionService.getUserBalance().subscribe(data => {

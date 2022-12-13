@@ -3,4 +3,5 @@ export interface Transaction{
     token: string,
     amount: number,
     type: string
+    
 }

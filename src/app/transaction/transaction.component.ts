@@ -1,7 +1,9 @@
 import { ParseError } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
+import { AppService } from '../app.service';
 import { TokenService } from './token/token.service';
+import { Transaction } from './Transaction';
 import { TransactionService } from './transaction.service';
 
 @Component({
@@ -31,20 +33,23 @@ export class AddTransactionDialog implements OnInit{
 
   constructor(public dialogRef: MatDialogRef<AddTransactionDialog>, 
     private transactionService: TransactionService,
+    private appService: AppService,
     private tokenService: TokenService) {
       dialogRef.disableClose = true;
     }
 
   tokenNames: string[] = []
+  selectedName?: string
   price?: number;
   walletBalance?: number;
   step?: number;
   amount: number = 0;
+  walletId?: number;
 
   ngOnInit(): void {
     this.getTokenNames();
     this.getWalletBalance();
-   
+    this.getWalletId();
   }
 
   public formatLabel(value: number): string{
@@ -72,7 +77,13 @@ export class AddTransactionDialog implements OnInit{
       this.getTokenPrice(event);
   }
 
-  save(){
-    console.log("Transaction saved.");
+  public getWalletId(){
+    this.walletId = this.appService.getUserData().walletId;
+  }
+
+  save(walletId: number, token: string, amount: number){
+    this.transactionService.addTransaction(walletId, token, amount).subscribe(
+      data => {console.log(data);}
+    );
   }
 }

@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ParseError } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import { AppService } from '../app.service';
 import { TokenService } from './token/token.service';
@@ -39,12 +41,14 @@ export class AddTransactionDialog implements OnInit{
     }
 
   tokenNames: string[] = []
-  selectedName?: string
   price?: number;
   walletBalance?: number;
   step?: number;
   amount: number = 0;
   walletId?: number;
+  token = new FormControl<string>('');
+  amountErrorMessage: string = ''
+
 
   ngOnInit(): void {
     this.getTokenNames();
@@ -82,8 +86,24 @@ export class AddTransactionDialog implements OnInit{
   }
 
   save(walletId: number, token: string, amount: number){
-    this.transactionService.addTransaction(walletId, token, amount).subscribe(
-      data => {console.log(data);}
-    );
+    this.transactionService.addTransaction(walletId, token, amount).subscribe({
+      next: data => {
+        console.log(data);
+    },
+    error: error => {
+      console.log(error);
+      this.handleError(error);
+    }
+  });
+  }
+
+  handleError(error: HttpErrorResponse){
+    if(error.error['token']){
+      console.log(error.error['token']);
+      this.token.setErrors({tokenError: error.error['token']});
+    }
+    if(error.error['amount']){
+      this.amountErrorMessage = error.error['amount'];
+    }
   }
 }

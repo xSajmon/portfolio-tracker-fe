@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
 import { AddTransactionDialog, TransactionComponent } from './transaction/transaction.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,10 @@ import { AddTransactionDialog, TransactionComponent } from './transaction/transa
     MatSelectModule,
     MatDialogModule,
     MatButtonModule,
-    MatSliderModule
+    MatSliderModule,
+    ReactiveFormsModule,
+    MatInputModule
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}

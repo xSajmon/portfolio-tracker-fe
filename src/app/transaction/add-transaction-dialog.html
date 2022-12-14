@@ -2,20 +2,22 @@
 <mat-dialog-content class="d-flex flex-column justify-content-center">
     <mat-form-field appearance="fill">
         <mat-label>Choose token:</mat-label>
-        <mat-select [(ngModel)]="selectedName" (ngModelChange)="changeName($event)">
+        <mat-select [formControl]="token" (ngModelChange)="changeName($event)">
             <mat-option *ngFor="let name of tokenNames" [value]="name">
                 {{name}}
               </mat-option>
         </mat-select>
         <mat-hint [hidden]="!price">{{price}}$</mat-hint>
+        <mat-error *ngIf="token.invalid" >{{token.getError("tokenError")}}</mat-error>
     </mat-form-field>
     <mat-slider min = "0" [max] = "walletBalance" [step]="step" 
     showTickMarks discrete="true" [displayWith]="formatLabel.bind(this)">
         <input matSliderThumb [(ngModel)]="amount">
     </mat-slider>
-    <h2 class="text-center">{{amount}}$</h2>
+    <h2 class="text-center" style="margin-bottom: 0px;">{{amount}}$</h2>
+    <span *ngIf="amount==0" class="text-center" style="color: #F44336; font-size: small;">{{amountErrorMessage}}</span>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button (click)="save(walletId!, selectedName!, amount)">Save</button>
+    <button mat-button (click)="save(walletId!,token.value!, amount)">Save</button>
 </mat-dialog-actions>

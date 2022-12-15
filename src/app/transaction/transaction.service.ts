@@ -19,10 +19,14 @@ export class TransactionService {
   }
 
   addTransaction(walletId: number, token: string, amount: number) {
-    return this.http.post<Transaction>(this.transactionUrl, {
+    return this.http.post<any>(this.transactionUrl, {
       walletId: walletId,
       token: token,
       amount: amount
     });
+  }
+
+  getTransactions(): Observable<Transaction[]>{
+    return this.http.get<Transaction[]>(this.transactionUrl);
   }
 }

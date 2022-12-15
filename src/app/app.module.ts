@@ -15,6 +15,7 @@ import { MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
 import { AddTransactionDialog, TransactionComponent } from './transaction/transaction.component';
 import { MatInputModule } from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
 
   ],
   providers: [

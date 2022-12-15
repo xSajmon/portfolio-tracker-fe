@@ -15,11 +15,41 @@ import { TransactionService } from './transaction.service';
 })
 export class TransactionComponent implements OnInit {
 
-  constructor(public dialog: MatDialog){}
+  transactions: Transaction[] = [];
+  tableColumns = [
+    {
+      columnDef: 'token',
+      header: 'Token',
+      cell: (element: Transaction) => `${element.token}`
+    },
+    {
+      columnDef: 'amount',
+      header: 'Amount',
+      cell: (element: Transaction) => `${element.amount}`
+    },
+    {
+      columnDef: 'date',
+      header: 'Date',
+      cell: (element: Transaction) => `${element.date}`
+    }
+  ];
+  displayedColumns = this.tableColumns.map(c=>c.columnDef);
 
-  ngOnInit(): void {}
+  constructor(public dialog: MatDialog, private transactionService: TransactionService){}
 
-  
+  ngOnInit(): void {
+    this.getTransactions();
+  }
+
+  getTransactions(){
+    this.transactionService.getTransactions().subscribe({
+      next: data => {
+        data.forEach(console.log);
+        this.transactions = data;
+      }
+    })
+  }
+
   openDialog() {
     this.dialog.open(AddTransactionDialog);
   }

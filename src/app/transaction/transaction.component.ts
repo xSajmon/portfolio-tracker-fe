@@ -3,6 +3,8 @@ import { ParseError } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs'
 import { AppService } from '../app.service';
 import { TokenService } from './token/token.service';
 import { Transaction } from './Transaction';
@@ -25,7 +27,7 @@ export class TransactionComponent implements OnInit {
     {
       columnDef: 'amount',
       header: 'Amount',
-      cell: (element: Transaction) => `${element.amount}`
+      cell: (element: Transaction) => `${element.amount}$`
     },
     {
       columnDef: 'date',
@@ -35,16 +37,38 @@ export class TransactionComponent implements OnInit {
   ];
   displayedColumns = this.tableColumns.map(c=>c.columnDef);
 
-  constructor(public dialog: MatDialog, private transactionService: TransactionService){}
+  constructor(public dialog: MatDialog, private transactionService: TransactionService){
+    this.initializeWebSocketConnection();
+  }
+
+  public stompClient : any;
+
+  initializeWebSocketConnection() {
+    const serverUrl = 'http://localhost:8080/test';
+    const ws = new SockJS(serverUrl);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    this.stompClient.connect({}, function(frame: any) {
+      that.stompClient.subscribe('/topic/transactions', (message: any) => {
+        let data = JSON.parse(message.body);
+        console.log(data);
+        that.transactions = data;
+    },
+    (error: any) => {
+      console.error(error);
+    });
+  });
+  }
 
   ngOnInit(): void {
-    this.getTransactions();
+    // this.getTransactions();
+    
   }
+
 
   getTransactions(){
     this.transactionService.getTransactions().subscribe({
       next: data => {
-        data.forEach(console.log);
         this.transactions = data;
       }
     })

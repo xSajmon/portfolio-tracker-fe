@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs'
 import { AppService } from '../app.service';
+import { Token } from './token/Token';
 import { TokenService } from './token/token.service';
 import { Transaction } from './Transaction';
 import { TransactionService } from './transaction.service';
@@ -18,6 +19,7 @@ import { TransactionService } from './transaction.service';
 export class TransactionComponent implements OnInit {
 
   transactions: Transaction[] = [];
+  prices: Token[] = [];
   tableColumns = [
     {
       columnDef: 'token',
@@ -33,30 +35,63 @@ export class TransactionComponent implements OnInit {
       columnDef: 'date',
       header: 'Date',
       cell: (element: Transaction) => `${element.date}`
+    },
+    {
+      columnDef: 'buying',
+      header: 'Buying price',
+      cell: (element: Transaction) => `${element.buyingPrice}$`
+    },
+    {
+      columnDef: 'current',
+      header: 'Current price',
+      cell: (element: Transaction) => `${element.currentPrice}$`
+    },
+    {
+      columnDef: 'profit',
+      header: 'Profit/Loss',
+      cell: (element: Transaction) => `~${element.profit}$`
     }
   ];
+
   displayedColumns = this.tableColumns.map(c=>c.columnDef);
 
   constructor(public dialog: MatDialog, private transactionService: TransactionService){
-    this.initializeWebSocketConnection();
+    this.fetchPrices();
+    this.fetchTransactions();
   }
 
-  public stompClient : any;
+  public transactionClient : any;
+  public priceClient: any;
 
-  initializeWebSocketConnection() {
+  fetchTransactions() {
     const serverUrl = 'http://localhost:8080/test';
     const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
+    this.transactionClient = Stomp.over(ws);
     const that = this;
-    this.stompClient.connect({}, function(frame: any) {
-      that.stompClient.subscribe('/topic/transactions', (message: any) => {
-        let data = JSON.parse(message.body);
-        console.log(data);
+    this.transactionClient.connect({}, function(frame: any) {
+      that.transactionClient.subscribe('/topic/transactions', (message: any) => {
+        const data: Transaction[] = JSON.parse(message.body);
+
+        data.forEach(element => {
+          let currentPrice = that.prices.find(x => x.name == element.token.slice(0, element.token.indexOf(' ')))?.price!;
+          element.currentPrice = currentPrice;
+          element.profit = parseFloat(((element.amount / element.buyingPrice - element.amount / currentPrice) * currentPrice).toFixed(2));
+        })
         that.transactions = data;
-    },
-    (error: any) => {
-      console.error(error);
-    });
+  });
+  });
+}
+
+  fetchPrices() {
+    const serverUrl = 'http://localhost:8080/test';
+    const ws = new SockJS(serverUrl);
+    this.priceClient = Stomp.over(ws);
+    const that = this;
+    this.priceClient.connect({}, function(frame: any) {
+      that.priceClient.subscribe('/topic/crypto-price', (message: any) => {
+        let data: Token[] = JSON.parse(message.body);
+        that.prices = data;
+      });
   });
   }
 
@@ -64,6 +99,7 @@ export class TransactionComponent implements OnInit {
     // this.getTransactions();
     
   }
+
 
 
   getTransactions(){

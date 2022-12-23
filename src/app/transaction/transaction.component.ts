@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ParseError } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog'
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs'
 import { AppService } from '../app.service';
+import { WebSocketService } from '../web-socket.service';
 import { Token } from './token/Token';
 import { TokenService } from './token/token.service';
 import { Transaction } from './Transaction';
@@ -18,8 +19,8 @@ import { TransactionService } from './transaction.service';
 })
 export class TransactionComponent implements OnInit {
 
-  transactions: Transaction[] = [];
-  prices: Token[] = [];
+  transactions!: Transaction[]
+
   tableColumns = [
     {
       columnDef: 'token',
@@ -55,52 +56,17 @@ export class TransactionComponent implements OnInit {
 
   displayedColumns = this.tableColumns.map(c=>c.columnDef);
 
-  constructor(public dialog: MatDialog, private transactionService: TransactionService){
-    this.fetchPrices();
-    this.fetchTransactions();
-  }
-
-  public transactionClient : any;
-  public priceClient: any;
-
-  fetchTransactions() {
-    const serverUrl = 'http://localhost:8080/test';
-    const ws = new SockJS(serverUrl);
-    this.transactionClient = Stomp.over(ws);
-    const that = this;
-    this.transactionClient.connect({}, function(frame: any) {
-      that.transactionClient.subscribe('/topic/transactions', (message: any) => {
-        const data: Transaction[] = JSON.parse(message.body);
-
-        data.forEach(element => {
-          let currentPrice = that.prices.find(x => x.name == element.token.slice(0, element.token.indexOf(' ')))?.price!;
-          element.currentPrice = currentPrice;
-          element.profit = parseFloat(((element.amount / element.buyingPrice - element.amount / currentPrice) * currentPrice).toFixed(2));
-        })
-        that.transactions = data;
-  });
-  });
-}
-
-  fetchPrices() {
-    const serverUrl = 'http://localhost:8080/test';
-    const ws = new SockJS(serverUrl);
-    this.priceClient = Stomp.over(ws);
-    const that = this;
-    this.priceClient.connect({}, function(frame: any) {
-      that.priceClient.subscribe('/topic/crypto-price', (message: any) => {
-        let data: Token[] = JSON.parse(message.body);
-        that.prices = data;
-      });
-  });
+  constructor(public dialog: MatDialog, private transactionService: TransactionService, private socketService: WebSocketService){
+      
   }
 
   ngOnInit(): void {
-    // this.getTransactions();
-    
+    this.socketService.fetchTransactions();
+    this.socketService.transactions.subscribe(data => {
+      this.transactions = data;
+   })
+
   }
-
-
 
   getTransactions(){
     this.transactionService.getTransactions().subscribe({

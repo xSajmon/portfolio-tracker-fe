@@ -18,7 +18,8 @@ import { AddTransactionDialog } from "./transaction/add-transaction-dialog";
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatCardModule} from '@angular/material/card'
+import {MatCardModule} from '@angular/material/card';
+import { TransactionDetailsComponent } from './transaction/transaction-details/transaction-details.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatCardModule} from '@angular/material/card'
     UserComponent,
     LoginComponent,
     TransactionComponent,
-    AddTransactionDialog
+    AddTransactionDialog,
+    TransactionDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import {MatCardModule} from '@angular/material/card'
     MatInputModule,
     MatTableModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}

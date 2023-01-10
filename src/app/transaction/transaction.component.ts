@@ -15,6 +15,7 @@ import { TransactionService } from './transaction.service';
 export class TransactionComponent implements OnInit {
 
   transactions!: Transaction[]
+  clickedElement?: Transaction
 
   tableColumns = [
     {

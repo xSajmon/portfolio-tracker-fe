@@ -1,4 +1,42 @@
-table {
-    margin: 10px;
-   
+.container-main{
+    display: flex;
 }
+
+.container-left{
+    width: 70%;
+    float: left;
+}
+
+.table-options {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.add-btn {
+    margin-left: auto;
+    float: right;
+}
+
+#active-p {
+    float: left;
+    align-self: center;
+}
+
+.container-right {
+    float: left;
+    display: flex;
+    margin-left: 20px;
+    width: 30%;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+}
+p {
+   font-size: 20px;
+}
+
+tr.single-row:hover {
+    background: whitesmoke;
+}
+

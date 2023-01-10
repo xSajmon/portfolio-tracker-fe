@@ -1,16 +1,28 @@
+<div class="container-main">
+    <div class="container-left">
+        <div class="table-options">
+            <span id="active-p">Currently active trades</span>
+            <button class="add-btn" mat-raised-button (click)="openDialog()">Add transaction</button>
+        </div>
+        <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+            <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnDef">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{column.header}}
+                </th>
+                <td mat-cell *matCellDef = "let row">
+                    {{column.cell(row)}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"
+                class="single-row" (click) = "clickedElement = row" ></tr>
+        </table>
+        
+    </div>
+    
+    <div class="container-right">
+        <app-transaction-details [clickedElement] = clickedElement></app-transaction-details>
+    </div>
 
 
-<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
-    <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnDef">
-        <th mat-header-cell *matHeaderCellDef>
-            {{column.header}}
-        </th>
-        <td mat-cell *matCellDef = "let row">
-            {{column.cell(row)}}
-        </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
-
-<button mat-raised-button style="padding: auto; margin-top: 10px;" (click)="openDialog()">Add transaction</button>
+</div>

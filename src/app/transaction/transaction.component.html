@@ -1,6 +1,6 @@
-<p>transaction works!</p>
-<button mat-raised-button (click)="openDialog()">Add transaction</button>
-<table mat-table [dataSource]="transactions">
+
+
+<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
     <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnDef">
         <th mat-header-cell *matHeaderCellDef>
             {{column.header}}
@@ -12,3 +12,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+
+<button mat-raised-button style="padding: auto; margin-top: 10px;" (click)="openDialog()">Add transaction</button>

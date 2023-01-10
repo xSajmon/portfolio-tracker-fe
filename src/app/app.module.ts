@@ -13,9 +13,12 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
-import { AddTransactionDialog, TransactionComponent } from './transaction/transaction.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { AddTransactionDialog } from "./transaction/add-transaction-dialog";
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card'
 
 @NgModule({
   declarations: [
@@ -38,8 +41,9 @@ import {MatTableModule} from '@angular/material/table';
     MatSliderModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatTableModule
-
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}

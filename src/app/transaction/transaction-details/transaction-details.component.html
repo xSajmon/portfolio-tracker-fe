@@ -1,11 +1,16 @@
-<mat-card>
+<mat-card class="mat-elevation-z5">
     <mat-card-header>
+        <img mat-card-avatar src="https://cdn1.iconfinder.com/data/icons/education-set-4/512/information-512.png">
         <mat-card-title>Transaction details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <p>{{clickedElement?.token}}</p>
-        <p>{{clickedElement?.currentPrice}}</p>
-        <p>{{clickedElement?.profit}}</p>
+        <div class="flex-column">
+            <span>Token: {{clickedElement?.token}}</span>
+            <span>Invested: {{clickedElement?.amount}}$</span>
+            <span>Current price: {{clickedElement?.currentPrice}}$</span>
+            <span>Balance: {{getPossibleBalance()}} </span>
+        </div>
+      
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-button>Take a profit</button>

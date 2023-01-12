@@ -25,12 +25,9 @@
 
 .container-right {
     float: left;
-    display: flex;
     margin-left: 20px;
     width: 30%;
-    height: 200px;
-    justify-content: center;
-    align-items: center;
+    height: 300px;
 }
 p {
    font-size: 20px;

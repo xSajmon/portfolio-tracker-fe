@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Transaction } from '../Transaction';
 
 @Component({
@@ -6,9 +6,10 @@ import { Transaction } from '../Transaction';
   templateUrl: './transaction-details.component.html',
   styleUrls: ['./transaction-details.component.css'],
 })
-export class TransactionDetailsComponent{
-  
+export class TransactionDetailsComponent {
+ 
   @Input() clickedElement?: Transaction
+  collapsed = true
  
 
   getPossibleBalance(): string{
@@ -30,5 +31,7 @@ export class TransactionDetailsComponent{
   calculateProfitPercentage(profit: number, costPrice: number): number{
     return profit/costPrice * 100;
   }
+
+ 
 
 }

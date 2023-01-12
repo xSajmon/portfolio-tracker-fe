@@ -4,7 +4,7 @@
         <mat-card-title>Transaction details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div class="flex-column">
+        <div class="flex-column"> 
             <span>Token: {{clickedElement?.token}}</span>
             <span>Invested: {{clickedElement?.amount}}$</span>
             <span>Current price: {{clickedElement?.currentPrice}}$</span>
@@ -13,6 +13,14 @@
       
     </mat-card-content>
     <mat-card-actions align="end">
-        <button mat-button>Take a profit</button>
+        <button mat-button (click)="collapsed = !collapsed">Take a profit</button>
     </mat-card-actions>
+    <mat-card-footer *ngIf="collapsed != true">
+        <p>Are you sure?</p>
+        <div>
+            <button mat-button (click)="collapsed = true">No</button>
+            <button mat-button>Yes</button>
+        </div>
+        
+    </mat-card-footer>
 </mat-card>

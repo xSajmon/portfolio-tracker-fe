@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { AppService } from './app.service';
-import { WebSocketService } from './web-socket.service';
+import { AuthenticationService } from './core/services/authentication.service';
+import { WebSocketService } from './core/services/web-socket.service';
 
 
 
@@ -13,15 +13,15 @@ import { WebSocketService } from './web-socket.service';
 export class AppComponent{
 
 
-  constructor(private app: AppService, private http: HttpClient, private socketService: WebSocketService) {}
+  constructor(private auth: AuthenticationService, private http: HttpClient, private socketService: WebSocketService) {}
 
   authenticated() {
-    return this.app.authenticated
+    return this.auth.authenticated
   }
 
   logout(){
     this.socketService.socketDisconnect();
-    this.app.logout();
+    this.auth.logout();
   }
 
 }

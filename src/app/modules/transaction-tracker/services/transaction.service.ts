@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppService } from '../app.service';
-import { Transaction } from './Transaction';
+import { AuthenticationService } from '../../../core/services/authentication.service';
+import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
 
-  constructor(private appService: AppService, private http: HttpClient) { }
+  constructor(private appService: AuthenticationService, private http: HttpClient) { }
   transactionUrl = 'http://localhost:8080/transactions'
 
   getUserBalance() :Observable<number>{

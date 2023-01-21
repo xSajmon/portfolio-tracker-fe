@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, retry } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import { Token } from './transaction/token/Token';
-import { Transaction } from './transaction/Transaction';
+import { Token } from '../../modules/transaction-tracker/models/token.model';
+import { Transaction } from '../../modules/transaction-tracker/models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,7 @@ updatePrices(): void{
 }
 
 convertTransactionTokenName(transaction: Transaction): string{
-  return transaction.token.slice(0, transaction.token.indexOf(' '));
+  return transaction.token.slice(0, transaction.token.indexOf('('));
 }
 
 getCurrentTokenPrice(tokens: Token[], transaction: Transaction): number{

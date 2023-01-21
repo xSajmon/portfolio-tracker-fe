@@ -2,21 +2,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AppService } from '../app.service';
-import { TokenService } from './token/token.service';
-import { TransactionService } from './transaction.service';
+import {  AuthenticationService } from '../../../core/services/authentication.service';
+import { TokenService } from '../services/token.service';
+import { TransactionService } from '../services/transaction.service';
 
 
 @Component({
-  selector: 'add-transaction-dialog',
-  templateUrl: 'add-transaction-dialog.html',
+  selector: 'transaction-add-dialog',
+  templateUrl: 'transaction-add-dialog.component.html',
 })
 
-export class AddTransactionDialog implements OnInit {
+export class AddTransactionDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddTransactionDialog>,
+  constructor(public dialogRef: MatDialogRef<AddTransactionDialogComponent>,
     private transactionService: TransactionService,
-    private appService: AppService,
+    private appService: AuthenticationService,
     private tokenService: TokenService) {
     dialogRef.disableClose = true;
   }

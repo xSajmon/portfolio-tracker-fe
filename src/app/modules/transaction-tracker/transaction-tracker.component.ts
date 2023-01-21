@@ -1,18 +1,16 @@
-import { ParseError } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog'
-import { WebSocketService } from '../web-socket.service';
-import { AddTransactionDialog } from './add-transaction-dialog';
-import { Transaction } from './Transaction';
-import { TransactionService } from './transaction.service';
+import { WebSocketService } from '../../core/services/web-socket.service';
+import { AddTransactionDialogComponent } from './transaction-add-dialog/add-transaction-dialog.component';
+import { Transaction } from './models/transaction.model';
+import { TransactionService } from './services/transaction.service';
 
 @Component({
-  selector: 'app-transaction',
-  templateUrl: './transaction.component.html',
-  styleUrls: ['./transaction.component.css']
+  selector: 'app-transaction-tracker',
+  templateUrl: './transaction-tracker.component.html',
+  styleUrls: ['./transaction-tracker.component.css']
 })
-export class TransactionComponent implements OnInit {
+export class TransactionTrackerComponent implements OnInit {
 
   transactions!: Transaction[]
   clickedElement?: Transaction
@@ -31,7 +29,7 @@ export class TransactionComponent implements OnInit {
     {
       columnDef: 'date',
       header: 'Date',
-      cell: (element: Transaction) => `${element.date}`
+      cell: (element: Transaction) => `${element.startDate}`
     },
     {
       columnDef: 'buying',
@@ -62,6 +60,7 @@ export class TransactionComponent implements OnInit {
     this.socketService.fetchTransactions();
     this.socketService.transactions.subscribe(data => {
       this.transactions = data;
+      console.log(data)
    })
   }
 
@@ -81,7 +80,7 @@ export class TransactionComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(AddTransactionDialog);
+    this.dialog.open(AddTransactionDialogComponent);
   }
 }
 

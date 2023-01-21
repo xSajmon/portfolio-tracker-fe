@@ -4,7 +4,7 @@ export interface Transaction{
     token: string,
     amount: number,
     type: string,
-    date: Date,
+    startDate: Date,
     buyingPrice: number,
     currentPrice: number,
     profit: number

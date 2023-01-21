@@ -1,15 +1,12 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import { User } from './user/User';
-import { UserComponent } from './user/user.component';
+import { User } from '../../modules/user-details/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AppService {
+export class AuthenticationService {
 
   authenticated = false
 

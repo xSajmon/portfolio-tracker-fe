@@ -29,4 +29,8 @@ export class TransactionService {
   getTransactions(): Observable<Transaction[]>{
     return this.http.get<Transaction[]>(this.transactionUrl);
   }
+
+  completeTransaction(id: number, sellingPrice: number){  
+    return this.http.patch<any>(this.transactionUrl + `/${id}`, sellingPrice)
+  }
 }

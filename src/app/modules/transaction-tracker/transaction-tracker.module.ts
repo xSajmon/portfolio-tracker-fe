@@ -12,6 +12,8 @@ import { MatTableModule } from '@angular/material/table'
 import { TransactionTrackerComponent } from './transaction-tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FilterTransactionPipe } from './pipes/filter-transaction.pipe';
 
 
 
@@ -20,7 +22,8 @@ import {MatButtonModule} from '@angular/material/button';
   declarations: [
     AddTransactionDialogComponent,
     TransactionDetailsComponent,
-    TransactionTrackerComponent
+    TransactionTrackerComponent,
+    FilterTransactionPipe
   ],
   imports: [
     CommonModule,
@@ -31,9 +34,11 @@ import {MatButtonModule} from '@angular/material/button';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTableModule,
+  
     BrowserAnimationsModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    SharedModule
+  ],
+  providers: [FilterTransactionPipe]
 })
 export class TransactionTrackerModule { }

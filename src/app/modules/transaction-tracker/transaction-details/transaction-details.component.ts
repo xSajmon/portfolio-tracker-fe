@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Transaction } from '../models/transaction.model';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-transaction-details',
@@ -7,6 +8,8 @@ import { Transaction } from '../models/transaction.model';
   styleUrls: ['./transaction-details.component.css'],
 })
 export class TransactionDetailsComponent {
+
+  constructor(private transactionService: TransactionService){}
  
   @Input() clickedElement?: Transaction
   collapsed = true
@@ -30,6 +33,16 @@ export class TransactionDetailsComponent {
 
   calculateProfitPercentage(profit: number, costPrice: number): number{
     return profit/costPrice * 100;
+  }
+
+  completeTransaction(){
+      this.transactionService.completeTransaction(this.clickedElement!.id, this.clickedElement!.currentPrice)
+        .subscribe((data) => {
+          console.log(data)
+          this.collapsed = true
+        })
+
+      
   }
 
  

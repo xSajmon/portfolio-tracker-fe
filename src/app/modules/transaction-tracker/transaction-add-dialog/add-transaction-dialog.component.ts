@@ -69,7 +69,7 @@ export class AddTransactionDialogComponent implements OnInit {
   save(walletId: number, token: string, amount: number) {
     this.transactionService.addTransaction(walletId, token, amount).subscribe({
       next: data => {
-        console.log(data);
+        this.dialogRef.close()
       },
       error: error => {
         console.log(error);

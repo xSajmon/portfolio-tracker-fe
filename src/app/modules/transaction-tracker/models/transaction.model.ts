@@ -5,7 +5,9 @@ export interface Transaction{
     amount: number,
     type: string,
     startDate: Date,
+    endDate: Date,
     buyingPrice: number,
     currentPrice: number,
+    sellingPrice: number,
     profit: number
 }

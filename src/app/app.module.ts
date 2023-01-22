@@ -8,6 +8,7 @@ import { HttpInterceptorService } from './core/interceptor/http-interceptor.serv
 import { TransactionTrackerModule } from './modules/transaction-tracker/transaction-tracker.module';
 import { LoginModule } from './modules/login/login.module';
 import { UserDetailsModule } from './modules/user-details/user-details.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UserDetailsModule } from './modules/user-details/user-details.module';
     FormsModule,
     TransactionTrackerModule,
     LoginModule,
-    UserDetailsModule
+    UserDetailsModule,
+    SharedModule
     
   ],
   providers: [
